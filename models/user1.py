@@ -27,7 +27,7 @@ class UserModel(db.Model):
         self.option_4 = option_4
 
     def json(self):
-        return {'username': self.username, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4}
+        return {'username': self.username, "password": '*********', 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4}
 
     def save_to_db(self):
         db.session.add(self)
