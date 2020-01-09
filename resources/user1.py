@@ -41,6 +41,10 @@ class UserRegister(Resource):
 
         return {"message": "User created successfully."}, 201
 
+class GetAllUsers(Resource):
+    def get(self):
+        return {'users': list(map(lambda x: x.json(), UserModel.query.all()))}
+
 
 class GetUser(Resource):
     parser = reqparse.RequestParser()
