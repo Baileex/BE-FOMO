@@ -6,6 +6,7 @@ from security import authenticate, identity
 from resources.user1 import UserRegister, GetUser, GetAllUsers
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
+from resources.methods import Methods
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -18,6 +19,7 @@ api = Api(app)
 
 jwt = JWT(app, authenticate, identity)  # /auth
 
+api.add_resource(Methods, '/')
 api.add_resource(GetAllUsers, '/users')
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(StoreList, '/stores')
