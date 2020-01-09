@@ -17,7 +17,7 @@ class UserRegister(Resource):
                         )
     parser.add_argument('email', type=str, required=True,
                         help="This field cannot be blank")
-    parser.add_argument('age', type=int, required=True,
+    parser.add_argument('age', type=str, required=True,
                         help="This field cannot be blank")
     parser.add_argument('location', type=str, required=True,
                         help="This field cannot be blank")
@@ -49,7 +49,11 @@ class GetAllUsers(Resource):
 
 class GetUser(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('location', type=str, required=True,
+    parser.add_argument('username',
+                        type=str,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('location', type=str,
                         help="This field cannot be blank")
     parser.add_argument('option_1', type=str, required=True,
                         help="This field cannot be blank")
@@ -72,6 +76,7 @@ class GetUser(Resource):
         user = UserModel.find_by_username(username)
 
         if user:
+            user.username = data['username']
             user.location = data['location']
             user.option_1 = data['option_1']
             user.option_2 = data['option_2']
@@ -89,3 +94,22 @@ class GetUser(Resource):
             user.delete_from_db()
             return {'message': "User deleted."}
         return {'message': 'User not found.'}, 404
+
+class ChangePassword(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('password',
+                        type=str,
+                        help="This field cannot be blank."
+                        )
+    
+    def patch(self, username):
+        data = ChangePassword.parser.parse_args()
+
+        user = UserModel.find_by_username(username)
+
+        if user:
+            user.password = data['password']
+
+        user.save_to_db()
+
+        return {"message": "User successfully updated."}, 201

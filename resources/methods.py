@@ -7,7 +7,7 @@ class Methods(Resource):
                 "description": "get list of all users"
             }
         },
-        " POST /register": {
+        "POST /register": {
                 "description": "post a user",
                 "example send": {
                     "username": "Bob",
@@ -22,11 +22,11 @@ class Methods(Resource):
                 }
             },
         
-        " GET /users/username": {
+        "GET /users/username": {
         "description": "Get User by username"
             },
 
-        " PATCH /users/username": {
+        "PATCH /users/username": {
         "description": "Patch User by username -  can patch location and quiz options",
         "example send": {
             "location": "Manchester",
@@ -37,7 +37,12 @@ class Methods(Resource):
         }
     },
 
-        " DELETE /users/username": {
+        "DELETE /users/username": {
         "description": "Delete User by username"
+    },
+
+
+        "POST /auth": {
+        "description": "check username and password"
     }
     }
