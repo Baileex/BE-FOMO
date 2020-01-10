@@ -1,23 +1,35 @@
 from db import db
 
 
-class ItemModel(db.Model):
-    __tablename__ = 'items'
+class EventsModel(db.Model):
+    __tablename__ = 'events'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    price = db.Column(db.Float(precision=2))
+    location = db.Column(db.String(80))
+    description = db.Column(db.String(400))
+    event_type = db.Column(db.String(80))
+    date = db.Column(db.Date())
+    time = db.Column(db.Time())
+    min_age = db.Column(db.String(80))
+    cost = db.Column(db.String(80))
 
-    store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
-    store = db.relationship('StoreModel')
 
-    def __init__(self, name, price, store_id):
+    business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'))
+    business = db.relationship('BusinessModel')
+
+    def __init__(self, name, location, business_id, description, event_type, date, time, min_age, cost):
         self.name = name
-        self.price = price
-        self.store_id = store_id
+        self.location = location
+        self.business_id = business_id
+        self.description = description
+        self.event_type = event_type
+        self.date = date
+        self.time = time
+        self.min_age = min_age
 
     def json(self):
-        return {'name': self.name, 'price': self.price}
+        return {'name': self.name, 'location': self.location, 'business_id': self.business_id, 'description': self.description, 'event_type': self.event_type, 'date': self.date, 'time': self.time, 'min_age': self.min_age }
 
     @classmethod
     def find_by_name(cls, name):
