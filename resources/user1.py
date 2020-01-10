@@ -1,8 +1,6 @@
 from flask_restful import Resource, reqparse
 from security import UserModel
 
-
-
 class UserRegister(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('username',
@@ -29,6 +27,10 @@ class UserRegister(Resource):
                         help="This field cannot be blank")
     parser.add_argument('option_4', type=str,
                         help="This field cannot be blank")
+    parser.add_argument('family', type=bool,
+                        default=False)
+    parser.add_argument('gender', type=str,
+                        help="This field cannot be blank")
 
     def post(self):
         data = UserRegister.parser.parse_args()
@@ -37,7 +39,7 @@ class UserRegister(Resource):
             return {"message": "A user with that username already exists"}, 400
 
         user = UserModel(data['username'], data['password'], data['email'], data['age'],
-                         data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'])
+                         data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
         user.save_to_db()
 
         return {"message": "User created successfully."}, 201
@@ -54,7 +56,8 @@ class UserLogin(Resource):
                         required=True,
                         help="This field cannot be blank."
     
-    @classmethod                   )
+                      )
+    @classmethod 
     def post(cls):
         data = cls.parser.parse_args()
 

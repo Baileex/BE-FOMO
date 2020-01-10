@@ -21,6 +21,10 @@ class BusinessRegister(Resource):
                         help="This field cannot be blank")
     parser.add_argument('description', type=str,
                         help="This field cannot be blank")
+    parser.add_argument('url', type=str,
+                        help="This field cannot be blank")
+    parser.add_argument('avatar', type=str,
+                        default="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 
     def post(self):
         data = BusinessRegister.parser.parse_args()
@@ -29,7 +33,7 @@ class BusinessRegister(Resource):
             return {'message': "A business with name '{}' already exists.".format(data['business_name'])}, 400 #
 
         business = BusinessModel(data['username'], data['password'], data['email'], data['business_name'],
-                         data['address'], data['description'])
+                         data['address'], data['description'], data['url'], data['avatar'])
         business.save_to_db()
             # except:
             #     return {"message": "An error occurred creating the store."}, 500
