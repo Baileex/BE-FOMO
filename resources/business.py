@@ -21,6 +21,10 @@ class BusinessRegister(Resource):
                         help="This field cannot be blank")
     parser.add_argument('description', type=str,
                         help="This field cannot be blank")
+    parser.add_argument('url', type=str,
+                        help="This field cannot be blank")
+    parser.add_argument('avatar', type=str,
+                        default="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
 
     def post(self):
         data = BusinessRegister.parser.parse_args()
@@ -29,7 +33,7 @@ class BusinessRegister(Resource):
             return {'message': "A business with name '{}' already exists.".format(data['business_name'])}, 400 #
 
         business = BusinessModel(data['username'], data['password'], data['email'], data['business_name'],
-                         data['address'], data['description'])
+                         data['address'], data['description'], data['url'], data['avatar'])
         business.save_to_db()
             # except:
             #     return {"message": "An error occurred creating the store."}, 500
@@ -73,4 +77,47 @@ class ChangeBusPassword(Resource):
 
         business.save_to_db()
 
-        return {"message": "Business successfully updated."}, 201
+        return {"message": "Password successfully updated."}, 201
+
+class ChangeBusUsername(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('username',
+                        type=str,
+                        help="This field cannot be blank."
+                        )
+
+    def patch(self, business_name):
+        data = ChangeBusUsername.parser.parse_args()
+
+        business = BusinessModel.find_by_business_name(business_name)
+
+        if business:
+            business.username = data['username']
+
+        business.save_to_db()
+        return {"message": "Username successfully updated"}, 201
+
+class ChangeBusDetails(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('email', type=str, required=True,
+                        help="This field cannot be blank")
+    parser.add_argument('business_name', type=str, required=True,
+                        help="This field cannot be blank")
+    parser.add_argument('address', type=str, required=True,
+                        help="This field cannot be blank")
+    parser.add_argument('description', type=str,
+                        help="This field cannot be blank")
+
+    def patch(self, business_name):
+        data = ChangeBusDetails.parser.parse_args()
+
+        business = BusinessModel.find_by_business_name(business_name)
+
+        if business:
+            business.email = data['email']
+            business.business_name = data['business_name']
+            business.address = data['address']
+            business.description = data['description']
+
+        business.save_to_db()
+        return {"message": "Business details successfully updated"}, 201

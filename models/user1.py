@@ -14,8 +14,10 @@ class UserModel(db.Model):
     option_2 = db.Column(db.String(80))
     option_3 = db.Column(db.String(80))
     option_4 = db.Column(db.String(80))
+    family = db.Column(db.Boolean())
+    gender = db.Column(db.String(30))
 
-    def __init__(self, username, password, email, age, location, option_1, option_2, option_3, option_4):
+    def __init__(self, username, password, email, age, location, option_1, option_2, option_3, option_4, family, gender):
         self.username = username
         self.password = password
         self.email = email
@@ -25,9 +27,11 @@ class UserModel(db.Model):
         self.option_2 = option_2
         self.option_3 = option_3
         self.option_4 = option_4
+        self.family = family
+        self.gender = gender
 
     def json(self):
-        return {'username': self.username, "password": self.password, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4}
+        return {'username': self.username, "password": self.password, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4, "family": self.family, "gender": self.gender}
 
     def save_to_db(self):
         db.session.add(self)
