@@ -35,6 +35,15 @@ class BusinessModel(db.Model):
     def find_by_business_name(cls, business_name):
         return cls.query.filter_by(business_name=business_name).first()
     
+    @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
+    
+    @classmethod
+    def find_by_username(cls, username):
+        return cls.query.filter_by(username= username).first()
+
+    
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
