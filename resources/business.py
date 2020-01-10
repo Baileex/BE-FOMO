@@ -1,5 +1,8 @@
 from flask_restful import Resource, reqparse
 from models.business import BusinessModel
+from werkzeug.security import safe_str_cmp
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_raw_jwt
+from blacklist import BLACKLIST
 
 class BusinessRegister(Resource):
     parser = reqparse.RequestParser()
@@ -35,6 +38,43 @@ class BusinessRegister(Resource):
             #     return {"message": "An error occurred creating the store."}, 500
 
         return business.json(), 201
+
+class BusinessLogin(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('username',
+                        type=str,
+                        required=True,
+                        help="This field cannot be blank."
+                        )
+    parser.add_argument('password',
+                        type=str,
+                        required=True,
+                        help="This field cannot be blank."
+    
+                    )
+    @classmethod   
+    def post(cls):
+        data = cls.parser.parse_args()
+
+        business = BusinessModel.find_by_username(data['username'])
+
+        if business and safe_str_cmp(business.password, data['password']):
+            access_token = create_access_token(identity=business.id, fresh=True)
+            refresh_token = create_refresh_token(business.id)
+            return {
+                'message': 'Business User logged in',
+                'access_token': access_token,
+                'refresh_token': refresh_token
+            }, 200
+        
+        return {'message': 'Invalid credentials'}, 401
+
+class BusinessLogout(Resource):
+    @jwt_required
+    def post(self):
+        jti = get_raw_jwt()['jti']  # jti is "JWT ID", a unique identifier for a JWT.
+        BLACKLIST.add(jti)
+        return {"message": "Successfully logged out"}, 200
 
 class Business(Resource):
 
