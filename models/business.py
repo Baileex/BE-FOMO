@@ -23,7 +23,8 @@ class BusinessModel(db.Model):
         self.description = description
 
     def json(self):
-        return {'business_name': self.business_name, 
+        return {'business_id': self.id,
+                'business_name': self.business_name, 
                 'username': self.username, 
                 'password': self.password, 
                 'email': self.email,
