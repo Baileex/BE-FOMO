@@ -9,6 +9,9 @@ cursor = connection.cursor()
 create_table = "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username text UNIQUE, password text, email text UNIQUE, age INTEGER, location text, option_1 text, option_2 text, option_3 text, option_4 text)"
 cursor.execute(create_table)
 
+create_table = "CREATE TABLE IF NOT EXISTS businesses (id INTEGER PRIMARY KEY, username text UNIQUE, password text, email text UNIQUE, business_name text, address text, description text)"
+cursor.execute(create_table)
+
 create_table = "CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY, name text, price real)"
 cursor.execute(create_table)
 

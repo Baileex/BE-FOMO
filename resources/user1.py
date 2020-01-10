@@ -49,12 +49,6 @@ class GetAllUsers(Resource):
 
 class GetUser(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('username',
-                        type=str,
-                        help="This field cannot be blank."
-                        )
-    parser.add_argument('location', type=str,
-                        help="This field cannot be blank")
     parser.add_argument('option_1', type=str, required=True,
                         help="This field cannot be blank")
     parser.add_argument('option_2', type=str, required=True,
@@ -76,8 +70,6 @@ class GetUser(Resource):
         user = UserModel.find_by_username(username)
 
         if user:
-            user.username = data['username']
-            user.location = data['location']
             user.option_1 = data['option_1']
             user.option_2 = data['option_2']
             user.option_3 = data['option_3']
@@ -113,3 +105,39 @@ class ChangePassword(Resource):
         user.save_to_db()
 
         return {"message": "User successfully updated."}, 201
+
+class ChangeUsername(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('username',
+                        type=str,
+                        help="This field cannot be blank."
+                        )
+
+    def patch(self, username):
+        data = ChangeUsername.parser.parse_args()
+
+        user = UserModel.find_by_username(username)
+
+        if user:
+            user.username = data['username']
+
+        user.save_to_db()
+        return {"message": "User successfully updated"}, 201
+
+class ChangeLocation(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('location',
+                        type=str,
+                        help="This field cannot be blank."
+                        )
+
+    def patch(self, username):
+        data = ChangeLocation.parser.parse_args()
+
+        user = UserModel.find_by_username(username)
+
+        if user:
+            user.location = data['location']
+
+        user.save_to_db()
+        return {"message": "User successfully updated"}, 201

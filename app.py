@@ -5,9 +5,9 @@ from flask_restful import Api
 from flask_jwt import JWT
 
 from security import authenticate, identity
-from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword
-from resources.item import Item, ItemList
-from resources.store import Store, StoreList
+from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation
+from resources.business import BusinessRegister, Business, GetAllBusinesses, ChangeBusPassword
+# from resources.item import Item, ItemList
 from resources.methods import Methods
 
 app = Flask(__name__)
@@ -23,13 +23,17 @@ jwt = JWT(app, authenticate, identity)  # /auth
 
 api.add_resource(Methods, '/')
 api.add_resource(GetAllUsers, '/users')
-api.add_resource(Store, '/store/<string:name>')
-api.add_resource(StoreList, '/stores')
-api.add_resource(Item, '/item/<string:name>')
-api.add_resource(ItemList, '/items')
+api.add_resource(GetAllBusinesses, '/businesses')
+api.add_resource(BusinessRegister, '/businesses/register')
+api.add_resource(Business, '/businesses/<string:business_name>')
+# api.add_resource(Item, '/item/<string:name>')
+# api.add_resource(ItemList, '/items')
 api.add_resource(UserRegister, '/register')
 api.add_resource(GetUser, '/users/<string:username>')
 api.add_resource(ChangePassword, '/users/<string:username>/password')
+api.add_resource(ChangeBusPassword, '/businesses/<string:business_name>/password')
+api.add_resource(ChangeUsername, '/users/<string:username>/username')
+api.add_resource(ChangeLocation, '/users/<string:username>/location')
 
 if __name__ == '__main__':
     from db import db
