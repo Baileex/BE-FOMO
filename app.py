@@ -3,10 +3,8 @@ import os
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-
-from security import authenticate, identity
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin
-from resources.business import BusinessRegister, ChangeBusDetails, ChangeBusUsername, Business, GetAllBusinesses, ChangeBusPassword
+from resources.business import BusinessRegister, ChangeBusDetails, ChangeBusUsername, Business, GetAllBusinesses, ChangeBusPassword, BusinessLogin
 # from resources.item import Item, ItemList
 from resources.methods import Methods
 
@@ -25,6 +23,7 @@ api.add_resource(Methods, '/')
 api.add_resource(GetAllUsers, '/users')
 api.add_resource(GetAllBusinesses, '/businesses')
 api.add_resource(BusinessRegister, '/businesses/register')
+api.add_resource(BusinessLogin, '/businesses/login')
 api.add_resource(Business, '/businesses/<string:business_name>')
 # api.add_resource(Item, '/item/<string:name>')
 # api.add_resource(ItemList, '/items')
