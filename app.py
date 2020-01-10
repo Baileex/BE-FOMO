@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 from flask_restful import Api
-from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
 
 from security import authenticate, identity
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation
@@ -19,7 +19,7 @@ api = Api(app)
 
 
 
-jwt = JWT(app, authenticate, identity)  # /auth
+jwt = JWTManager(app)  # /auth
 
 api.add_resource(Methods, '/')
 api.add_resource(GetAllUsers, '/users')
