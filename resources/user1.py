@@ -44,7 +44,7 @@ class UserRegister(Resource):
             return {"message": "A user with that username already exists"}, 400
             
 
-        user = UserModel(data['username'], data['password'], data['email'], data['age'], data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
+        user = UserModel(data['username'], UserModel.generate_hash(data['password']), data['email'], data['age'], data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
         
         user.save_to_db()
 
