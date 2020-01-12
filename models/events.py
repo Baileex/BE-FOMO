@@ -29,14 +29,15 @@ class EventsModel(db.Model):
         self.cost = cost
 
     def json(self):
-        return {'name': self.name, 'location': self.location, 'business_id': self.business_id, 'description': self.description, 'event_type': self.event_type, 'date': self.date, 'time': self.time, 'min_age': self.min_age }
+        return {'name': self.name, 'location': self.location, 'business_id': self.business_id, 'description': self.description, 'event_type': self.event_type, 'date': self.date, 'time': self.time, 'min_age': self.min_age, 'cost': self.cost }
 
     @classmethod
     def find_by_name(cls, name):
         return cls.query.filter_by(name=name).first()
 
-    def find_by_business_id(cls, business_id):
-        return cls.query.filter_by(business_id=business_id)   
+    @classmethod
+    def find_by_id(cls, business_id):
+        return cls.query.filter_by(business_id=business_id).all()  
 
     def save_to_db(self):
         db.session.add(self)

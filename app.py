@@ -33,11 +33,11 @@ api.add_resource(BusinessRegister, '/businesses/register')
 api.add_resource(BusinessLogin, '/businesses/login')
 api.add_resource(BusinessLogout, '/businesses/logout')
 api.add_resource(Business, '/businesses/<string:business_name>')
-api.add_resource(EventPoster, '/businesses/event')
+api.add_resource(EventPoster, '/businesses/event/<int:business_id>')
 api.add_resource(EventList, '/events')
 
 api.add_resource(Event, '/events/<string:name>')
-api.add_resource(EventByID, '/events/<string:business_id>')
+api.add_resource(EventByID, '/events/<int:business_id>')
 
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')

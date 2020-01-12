@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.events import EventsModel
+from models.business import BusinessModel
 
 
 class Event(Resource):
@@ -15,11 +16,11 @@ class Event(Resource):
                         required=True,
                         help="Every event needs a location."
                         )
-    parser.add_argument('business_id',
-                        type=str,
-                        required=True,
-                        help="Every event needs a business_id."
-                        )                    
+    # parser.add_argument('business_id',
+    #                     type=str,
+    #                     required=True,
+    #                     help="Every event needs a business_id."
+    #                     )                    
     parser.add_argument('description',
                         type=str,
                         required=True,
@@ -60,41 +61,56 @@ class Event(Resource):
     
 
     def delete(self, name):
-        item = ItemModel.find_by_name(name)
-        if item:
-            item.delete_from_db()
-            return {'message': 'Item deleted.'}
-        return {'message': 'Item not found.'}, 404
+        event = EventsModel.find_by_name(name)
+        if event:
+            event.delete_from_db()
+            return {'message': 'Event deleted.'}
+        return {'message': 'Event not found.'}, 404
 
-    def put(self, name):
-        data = Item.parser.parse_args()
+    def patch(self, name):
+        data = Event.parser.parse_args()
 
-        item = ItemModel.find_by_name(name)
+        event = EventsModel.find_by_name(name)
 
-        if item:
-            item.price = data['price']
-        else:
-            item = ItemModel(name, **data)
+        if event:
+            event.name = data['name']
+            event.location = data['location']
+            event.description = data['description']
+            event.event_type = data['event_type']
+            event.date = data['date']
+            event.time = data['time']
+            event.min_age = data['min_age']
+            event.cost = data['cost']
 
-        item.save_to_db()
+        event.save_to_db()
 
-        return item.json()
+        return event.json()
 
 
 class EventList(Resource):
     def get(self):
         return {'events': list(map(lambda x: x.json(), EventsModel.query.all()))}
 
-# class EventByID(Resource):
-#     def get(self, business_id):
-#         return {'events': list(map(lambda x: x.json(), EventsModel.query.find_by_id()))}
+class EventByID(Resource):
+    def get(self, business_id):
+
+        events = EventsModel.find_by_id(business_id)
+
+        return {'events': list(map(lambda x: x.json(), events))}
 
 class EventPoster(Resource):
-    def post(self):
-
+    def post(self, business_id):
+    
+      business = BusinessModel.find_by_id(business_id)
+      
+      if business:
+      
         data = Event.parser.parse_args()
-
-        event = EventsModel(**data)
+        
+        if EventsModel.find_by_name(data['name']):
+            return {'message': "An event with name '{}' already exists.".format(data['name'])}, 400
+            
+        event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'])
 
         try:
             event.save_to_db()
