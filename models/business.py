@@ -36,7 +36,7 @@ class BusinessModel(db.Model):
         self.avatar = avatar
 
     def json(self):
-        return{'business_id': self.id,
+        return {'business_id': self.id,
                 'business_name': self.business_name, 
                 'username': self.username, 
                 'password': self.password, 

@@ -18,9 +18,9 @@ class UserRegister(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('email',type=str, required=True,
+    parser.add_argument('email', type=str, required=True,
                         help="This field cannot be blank")
-    parser.add_argument('age', type=int, required=True,
+    parser.add_argument('age', type=str, required=True,
                         help="This field cannot be blank")
     parser.add_argument('location', type=str, required=True,
                         help="This field cannot be blank")
@@ -43,11 +43,11 @@ class UserRegister(Resource):
         if UserModel.find_by_username(data['username']):
             return {"message": "A user with that username already exists"}, 400
 
-        user = UserModel(data['username'], UserModel.generate_hash(data['password']), data['email'], data['age'], data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
-
+        user = UserModel(data['username'], data['password'], data['email'], data['age'],
+                         data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
         user.save_to_db()
 
-        return user.json(), 201
+        return {"message": "User created successfully."}, 201
 
 class UserLogin(Resource):
     parser = reqparse.RequestParser()

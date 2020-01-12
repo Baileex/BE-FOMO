@@ -34,7 +34,8 @@ class UserModel(db.Model):
         self.gender = gender
 
     def json(self):
-        return {'username': self.username, "password": self.password, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4, "family": self.family, "gender": self.gender}
+        return {'username': self.username, "password": self.password, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4, "family": self.family, "gender": self.gender
+        }
 
     def save_to_db(self):
         db.session.add(self)
