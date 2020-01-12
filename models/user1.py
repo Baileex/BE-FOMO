@@ -1,19 +1,28 @@
 from db import db
+from passlib.hash import pbkdf2_sha256 as sha256
 
 
 class UserModel(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80))
-    password = db.Column(db.String(80))
-    email = db.Column(db.String(80))
+    username = db.Column(db.String(80), unique = True, nullable = False)
+    password = db.Column(db.String(80), unique = True, nullable = False)
+    email = db.Column(db.String(80), unique = True, nullable = False)
     age = db.Column(db.Integer)
     location = db.Column(db.String(80))
     option_1 = db.Column(db.String(80))
     option_2 = db.Column(db.String(80))
     option_3 = db.Column(db.String(80))
     option_4 = db.Column(db.String(80))
+
+    @staticmethod
+    def generate_hash(password):
+        return sha256.hash(password)
+    
+    @staticmethod
+    def verify_hash(password, hash):
+        return sha256.verify(password, hash)
 
     def __init__(self, username, password, email, age, location, option_1, option_2, option_3, option_4):
         self.username = username

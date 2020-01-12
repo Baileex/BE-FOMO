@@ -39,7 +39,7 @@ class UserRegister(Resource):
         if UserModel.find_by_username(data['username']):
             return {"message": "A user with that username already exists"}, 400
 
-        user = UserModel(data['username'], data['password'], data['email'], data['age'],
+        user = UserModel(data['username'], UserModel.generate_hash(data['password']), data['email'], data['age'],
                          data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'])
         user.save_to_db()
 
@@ -64,7 +64,7 @@ class UserLogin(Resource):
 
         user = UserModel.find_by_username(data['username'])
 
-        if user and safe_str_cmp(user.password, data['password']):
+        if user and UserModel.verify_hash( data['password'], user.password):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {

@@ -31,7 +31,7 @@ class BusinessRegister(Resource):
         if BusinessModel.find_by_business_name(data['business_name']):
             return {'message': "A business with name '{}' already exists.".format(data['business_name'])}, 400 #
 
-        business = BusinessModel(data['username'], data['password'], data['email'], data['business_name'],
+        business = BusinessModel(data['username'], BusinessModel.generate_hash(data['password']), data['email'], data['business_name'],
                          data['address'], data['description'])
         business.save_to_db()
             # except:
@@ -58,7 +58,7 @@ class BusinessLogin(Resource):
 
         business = BusinessModel.find_by_username(data['username'])
 
-        if business and safe_str_cmp(business.password, data['password']):
+        if business and BusinessModel.verify_hash(data['password'], business.password):
             access_token = create_access_token(identity=business.id, fresh=True)
             refresh_token = create_refresh_token(business.id)
             return {
