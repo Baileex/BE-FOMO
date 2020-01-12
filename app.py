@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_cors import CORS
+
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin, UserLogout
