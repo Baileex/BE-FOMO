@@ -53,6 +53,7 @@ class UserModel(db.Model):
     @staticmethod
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
+        
     @classmethod
     def find_by_username(cls, username):
         return cls.query.filter_by(username=username).first()
