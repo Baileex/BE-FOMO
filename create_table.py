@@ -12,7 +12,7 @@ cursor.execute(create_table)
 create_table = "CREATE TABLE IF NOT EXISTS businesses (id INTEGER PRIMARY KEY, username text UNIQUE, password text, email text UNIQUE, business_name text, address text, description text, url text, avatar text)"
 cursor.execute(create_table)
 
-create_table = "CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY, name text, price real)"
+create_table = "CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY, name text, location text, description text, event_type text, date Date, time Time, min_age text, cost text, business_id INTEGER)"
 cursor.execute(create_table)
 
 # create_table = "CREATE TABLE IF NOT EXISTS event_history (id INTEGER PRIMARY KEY, age INTEGER, sex)"

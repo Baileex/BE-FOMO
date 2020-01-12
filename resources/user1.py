@@ -1,5 +1,9 @@
 from flask_restful import Resource, reqparse
+from werkzeug.security import safe_str_cmp
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_raw_jwt
 from models.user1 import UserModel
+from blacklist import BLACKLIST
+
 
 
 class UserRegister(Resource):
@@ -39,8 +43,13 @@ class UserRegister(Resource):
         if UserModel.find_by_username(data['username']):
             return {"message": "A user with that username already exists"}, 400
 
+<<<<<<< HEAD
+        user = UserModel(data['username'], UserModel.generate_hash(data['password']), data['email'], data['age'],
+                         data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'])
+=======
         user = UserModel(data['username'], data['password'], data['email'], data['age'],
                          data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
+>>>>>>> master
         user.save_to_db()
 
         return {"message": "User created successfully."}, 201
@@ -57,23 +66,35 @@ class UserLogin(Resource):
                         required=True,
                         help="This field cannot be blank."
     
+<<<<<<< HEAD
+                    )
+    @classmethod   
+=======
                       )
     @classmethod 
+>>>>>>> master
     def post(cls):
         data = cls.parser.parse_args()
 
         user = UserModel.find_by_username(data['username'])
 
-        if user and safe_str_cmp(user.password, data['password']):
+        if user and UserModel.verify_hash( data['password'], user.password):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
+                'message': 'User logged in',
                 'access_token': access_token,
                 'refresh_token': refresh_token
             }, 200
         
         return {'message': 'Invalid credentials'}, 401
 
+class UserLogout(Resource):
+    @jwt_required
+    def post(self):
+        jti = get_raw_jwt()['jti']
+        BLACKLIST.add(jti)
+        return {"message": "Successfully logged out"}, 200
 
 class GetAllUsers(Resource):
     def get(self):

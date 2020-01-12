@@ -1,4 +1,5 @@
 from db import db
+from passlib.hash import pbkdf2_sha256 as sha256
 
 
 class BusinessModel(db.Model):
@@ -14,8 +15,16 @@ class BusinessModel(db.Model):
     url = db.Column(db.String(400))
     avatar = db.Column(db.String(400))
 
-    # items = db.relationship('ItemModel', lazy='dynamic')
+    events = db.relationship('EventsModel', lazy='dynamic')
 
+    @staticmethod
+    def generate_hash(password):
+        return sha256.hash(password)
+    
+    @staticmethod
+    def verify_hash(password, hash):
+        return sha256.verify(password, hash)
+        
     def __init__(self, username, password, email, business_name, address, description, url, avatar):
         self.username = username
         self.password = password
@@ -27,7 +36,8 @@ class BusinessModel(db.Model):
         self.avatar = avatar
 
     def json(self):
-        return {'business_name': self.business_name, 
+        return {'business_id': self.id,
+                'business_name': self.business_name, 
                 'username': self.username, 
                 'password': self.password, 
                 'email': self.email,
