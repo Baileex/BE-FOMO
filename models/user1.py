@@ -10,13 +10,13 @@ class UserModel(db.Model):
     username = db.Column(db.String(80), unique = True, nullable = False)
     password = db.Column(db.String(80), unique = True, nullable = False)
     email = db.Column(db.String(80), unique = True, nullable = False)
-    age = db.Column(db.Integer())
+    age = db.Column(db.Integer)
     location = db.Column(db.String(80))
     option_1 = db.Column(db.String(80))
     option_2 = db.Column(db.String(80))
     option_3 = db.Column(db.String(80))
     option_4 = db.Column(db.String(80))
-    family = db.Column(db.Boolean())
+    family = db.Column(db.Boolean)
     gender = db.Column(db.String(30))
 
     @staticmethod
