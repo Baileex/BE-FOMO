@@ -12,6 +12,8 @@ class BusinessModel(db.Model):
     business_name = db.Column(db.String(80))
     address = db.Column(db.String(400))
     description = db.Column(db.String(400))
+    url = db.Column(db.String(400))
+    avatar = db.Column(db.String(400))
 
     events = db.relationship('EventsModel', lazy='dynamic')
 
@@ -23,13 +25,15 @@ class BusinessModel(db.Model):
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
         
-    def __init__(self, username, password, email, business_name, address, description):
+    def __init__(self, username, password, email, business_name, address, description, url, avatar):
         self.username = username
         self.password = password
         self.email = email
         self.business_name = business_name
         self.address = address
         self.description = description
+        self.url = url
+        self.avatar = avatar
 
     def json(self):
         return {'business_id': self.id,
@@ -38,7 +42,9 @@ class BusinessModel(db.Model):
                 'password': self.password, 
                 'email': self.email,
                 'address': self.address,
-                'description': self.description
+                'description': self.description,
+                'url': self.url,
+                'avatar': self.avatar
         }
 
     @classmethod

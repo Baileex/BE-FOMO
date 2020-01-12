@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin, UserLogout
@@ -10,6 +11,7 @@ from resources.methods import Methods
 from blacklist import BLACKLIST
 
 app = Flask(__name__)
+cors = CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db') 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
