@@ -1,5 +1,5 @@
 from db import db
-from passlib.hash import pbkdf2_sha256 as sha256
+from passlib.hash import sha256_crypt as sha256
 
 
 
