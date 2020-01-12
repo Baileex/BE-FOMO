@@ -20,7 +20,7 @@ class UserRegister(Resource):
                         )
     parser.add_argument('email', type=str,     required=True,
                         help="This field cannot be blank")
-    parser.add_argument('age', type=int, required=True,
+    parser.add_argument('age', type=str, required=True,
                         help="This field cannot be blank")
     parser.add_argument('location', type=str, required=True,
                         help="This field cannot be blank")
