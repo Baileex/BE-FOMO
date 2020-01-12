@@ -10,14 +10,14 @@ class UserModel(db.Model):
     username = db.Column(db.String(80))
     password = db.Column(db.String(80))
     email = db.Column(db.String(80))
-    age = db.Column(db.String(80))
+    age = db.Column(db.Integer())
     location = db.Column(db.String(80))
     option_1 = db.Column(db.String(80))
     option_2 = db.Column(db.String(80))
     option_3 = db.Column(db.String(80))
     option_4 = db.Column(db.String(80))
-    family = db.Column(db.String(80))
-    gender = db.Column(db.String(30))
+    family = db.Column(db.Boolean())
+    gender = db.Column(db.String(80))
 
     @staticmethod
     def generate_hash(password):
@@ -41,8 +41,7 @@ class UserModel(db.Model):
         self.gender = gender
 
     def json(self):
-        return 
-        {'username': self.username, "password": self.password, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4, "family": self.family, "gender": self.gender}
+        return {'username': self.username, "password": self.password, 'email': self.email, "age": self.age, "location": self.location, "option_1": self.option_1, "option_2": self.option_2, "option_3": self.option_3, "option_4": self.option_4, "family": self.family, "gender": self.gender}
 
     def save_to_db(self):
         db.session.add(self)
