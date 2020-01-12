@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.user1 import UserModel
-from flask_jwt_extended import JWTManager, jwt_required
+
 
 class UserRegister(Resource):
     parser = reqparse.RequestParser()
@@ -76,7 +76,6 @@ class UserLogin(Resource):
 
 
 class GetAllUsers(Resource):
-    jwt_required()
     def get(self):
         return {'users': list(map(lambda x: x.json(), UserModel.query.all()))}
 
