@@ -2,7 +2,6 @@ import os
 
 from flask import Flask
 from flask_cors import CORS
-
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin, UserLogout
@@ -38,10 +37,8 @@ api.add_resource(BusinessLogout, '/businesses/logout')
 api.add_resource(Business, '/businesses/<string:business_name>')
 api.add_resource(EventPoster, '/businesses/event/<int:business_id>')
 api.add_resource(EventList, '/events')
-
 api.add_resource(Event, '/events/<string:name>')
 api.add_resource(EventByID, '/events/<int:business_id>')
-
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
