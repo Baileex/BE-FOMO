@@ -87,7 +87,7 @@ class UserLogout(Resource):
         return {"message": "Successfully logged out"}, 200
 
 class GetAllUsers(Resource):
-    @jwt_required
+    # @jwt_required
     def get(self):
         return {'users': list(map(lambda x: x.json(), UserModel.query.all()))}
 
