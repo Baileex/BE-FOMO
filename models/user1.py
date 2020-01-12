@@ -14,7 +14,7 @@ class UserModel(db.Model):
     option_2 = db.Column(db.String(80))
     option_3 = db.Column(db.String(80))
     option_4 = db.Column(db.String(80))
-    family = db.Column(db.Boolean())
+    family = db.Column(db.Boolean)
     gender = db.Column(db.String(30))
 
     def __init__(self, username, password, email, age, location, option_1, option_2, option_3, option_4, family, gender):
