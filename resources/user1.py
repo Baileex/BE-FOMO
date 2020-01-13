@@ -51,7 +51,7 @@ class UserRegister(Resource):
         return {"message": "User created successfully."}, 201
 
 class UserLogin(Resource):
-    @jwt_required
+    
     parser = reqparse.RequestParser()
     parser.add_argument('username',
                         type=str,
@@ -66,6 +66,7 @@ class UserLogin(Resource):
                     )
        
     def post(self):
+        @jwt_required
         data = self.parser.parse_args()
 
         user = UserModel.find_by_username(data['username'])
