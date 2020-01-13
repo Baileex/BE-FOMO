@@ -105,11 +105,11 @@ class EventPoster(Resource):
       
       if business:
         data = Event.parser.parse_args()
-
-      return {'message': 'business does not exist'}, 404  
+      else:
+        return {'message': 'business does not exist'}, 404  
         
       if EventsModel.find_by_name(data['name']):
-            return {'message': "An event with name '{}' already exists.".format(data['name'])}, 400
+         return {'message': "An event with name '{}' already exists.".format(data['name'])}, 400
             
       event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'])
 
