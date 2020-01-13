@@ -65,7 +65,7 @@ class Methods(Resource):
 
       "PATCH /users/:username/password": {
           "description": "Change user password"
-      },
+      }
 
-      
+
     }
