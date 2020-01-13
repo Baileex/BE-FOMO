@@ -76,8 +76,7 @@ class UserLogin(Resource):
         
         orig = data['password']
 
-        if user and sha25_crypt.verify(orig, user.password):
-        
+        if user and sha256_crypt.verify(orig, user.password):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
