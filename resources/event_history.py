@@ -79,16 +79,12 @@ class EventHistDelete(Resource):
 
 class EventHistByType(Resource):
     def get(self, event_type):
-
         events = EventHistoryModel.find_by_event_type(event_type)
-
         return {'event_history': list(map(lambda x: x.json(), events))}
 
 class EventHistByLocation(Resource):
     def get(self, location):
-
         events = EventHistoryModel.find_by_location(location)
-
         return {'event_history': list(map(lambda x: x.json(), events))}
 
 # class EventHistoryPoster(Resource):
