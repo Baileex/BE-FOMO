@@ -3,7 +3,7 @@ from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_raw_jwt
 from models.user1 import UserModel
 from blacklist import BLACKLIST
-from passlib.hash import pbkdf2_sha256
+from passlib.hash import sha256_crypt
 
 # pwd_context = CryptContext(
 #     schemes=["pbkdf2_sha256"],
@@ -50,7 +50,7 @@ class UserRegister(Resource):
             return {"message": "A user with that username already exists"}, 400
             
 
-        user = UserModel(data['username'], data['password'], data['email'], data['age'], data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
+        user = UserModel(data['username'], sha256_crypt.hash(data['password']), data['email'], data['age'], data['location'], data['option_1'], data['option_2'], data['option_3'], data['option_4'], data['family'], data['gender'])
         user.save_to_db()
 
         return {"message": "User created successfully."}, 201
@@ -76,8 +76,8 @@ class UserLogin(Resource):
         
         orig = data['password']
 
-        if user: 
-        # and pbkdf2_sha256.verify(orig, user.password):
+        if user and sha25_crypt.verify(orig, user.password):
+        
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
