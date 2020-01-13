@@ -93,6 +93,7 @@ class Business(Resource):
 
         def delete(self, business_name):
             business = BusinessModel.find_by_business_name(business_name)
+            
             if business:
                 business.delete_from_db()
 

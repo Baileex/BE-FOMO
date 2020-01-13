@@ -61,7 +61,7 @@ class BusinessModel(db.Model):
 
     @classmethod
     def find_by_business_name(cls, business_name):
-        return cls.query.filter_by(business_name= business_name).first()
+        return cls.query.filter_by(business_name = business_name).first()
     
     def save_to_db(self):
         db.session.add(self)
