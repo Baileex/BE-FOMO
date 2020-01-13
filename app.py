@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin, UserLogout
 from resources.business import BusinessRegister, ChangeBusDetails, ChangeBusUsername, Business, GetAllBusinesses, ChangeBusPassword, BusinessLogin, BusinessLogout
 from resources.events import EventList, Event, EventPoster, EventByID
+from resources.event_history import EventHistByType, EventHist, EventHistDelete
 from resources.methods import Methods
 from blacklist import BLACKLIST
 
@@ -49,6 +50,9 @@ api.add_resource(ChangeBusDetails, '/businesses/<string:business_name>/details')
 api.add_resource(ChangeBusUsername, '/businesses/<string:business_name>/username')
 api.add_resource(ChangeUsername, '/users/<string:username>/username')
 api.add_resource(ChangeLocation, '/users/<string:username>/location')
+api.add_resource(EventHist, '/event_history')
+api.add_resource(EventHistDelete, '/event_history/<int:id>')
+api.add_resource(EventHistByType, '/event_history/<string:event_type>')
 
 if __name__ == '__main__':
     from db import db
