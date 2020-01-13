@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from werkzeug.security import safe_str_cmp
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_raw_jwt
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required,get_raw_jwt
 from models.user1 import UserModel
 from blacklist import BLACKLIST
 from passlib.hash import sha256_crypt
@@ -66,7 +66,6 @@ class UserLogin(Resource):
                     )
        
     def post(self):
-        @jwt_required
         data = self.parser.parse_args()
 
         user = UserModel.find_by_username(data['username'])
@@ -92,7 +91,7 @@ class UserLogout(Resource):
         return {"message": "Successfully logged out"}, 200
 
 class GetAllUsers(Resource):
-    # @jwt_required
+    @jwt_required
     def get(self):
         return {'users': list(map(lambda x: x.json(), UserModel.query.all()))}
 
