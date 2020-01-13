@@ -84,6 +84,13 @@ class EventHistByType(Resource):
 
         return {'event_history': list(map(lambda x: x.json(), events))}
 
+class EventHistByLocation(Resource):
+    def get(self, location):
+
+        events = EventHistoryModel.find_by_location(location)
+
+        return {'event_history': list(map(lambda x: x.json(), events))}
+
 # class EventHistoryPoster(Resource):
 #     def post(self, business_id):
     

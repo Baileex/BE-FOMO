@@ -29,6 +29,10 @@ class EventHistoryModel(db.Model):
     def find_by_event_type(cls, event_type):
         return cls.query.filter_by(event_type=event_type).all()  
 
+    @classmethod
+    def find_by_location(cls, location):
+        return cls.query.filter_by(location=location).all() 
+
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()
