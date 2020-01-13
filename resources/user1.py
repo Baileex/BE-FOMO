@@ -97,6 +97,7 @@ class GetAllUsers(Resource):
 
 class GetUser(Resource):
     parser = reqparse.RequestParser()
+    parser.add_argument('family', type=bool)
     parser.add_argument('option_1', type=str, required=True,
                         help="This field cannot be blank")
     parser.add_argument('option_2', type=str, required=True,
@@ -118,6 +119,7 @@ class GetUser(Resource):
         user = UserModel.find_by_username(username)
 
         if user:
+            user.family = data['family']
             user.option_1 = data['option_1']
             user.option_2 = data['option_2']
             user.option_3 = data['option_3']
