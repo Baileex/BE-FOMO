@@ -5,11 +5,6 @@ from models.user1 import UserModel
 from blacklist import BLACKLIST
 from passlib.hash import sha256_crypt
 
-# pwd_context = CryptContext(
-#     schemes=["pbkdf2_sha256"],
-#     default="pbkdf2_sha256",
-#     pbkdf2_sha256__default_rounds=30000
-# )
 
 
 class UserRegister(Resource):

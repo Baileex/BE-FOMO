@@ -3,6 +3,7 @@ from models.business import BusinessModel
 from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_raw_jwt
 from blacklist import BLACKLIST
+from passlib.hash import sha256_crypt
 
 class BusinessRegister(Resource):
     parser = reqparse.RequestParser()
@@ -35,7 +36,7 @@ class BusinessRegister(Resource):
         if BusinessModel.find_by_business_name(data['business_name']):
             return {'message': "A business with name '{}' already exists.".format(data['business_name'])}, 400 #
 
-        business = BusinessModel(data['username'], data['password'], data['email'], data['business_name'],
+        business = BusinessModel(data['username'], sha256_crypt.hash(data['password']), data['email'], data['business_name'],
                          data['address'], data['description'], data['url'], data['avatar'])
         business.save_to_db()
             # except:
@@ -61,8 +62,10 @@ class BusinessLogin(Resource):
         data = cls.parser.parse_args()
 
         business = BusinessModel.find_by_username(data['username'])
+        
+        orig = data['password']
 
-        if business and BusinessModel.verify_hash(data['password'], business.password):
+        if business and sha256_crypt.verify(orig, business.password):
             access_token = create_access_token(identity=business.id, fresh=True)
             refresh_token = create_refresh_token(business.id)
             return {
