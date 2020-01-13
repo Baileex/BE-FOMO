@@ -87,17 +87,21 @@ class Business(Resource):
 
         def get(self, business_name):
             business = BusinessModel.find_by_business_name(business_name)
+            
             if business:
                 return business.json()
             return {'message': 'business not found'}, 404
 
         def delete(self, business_name):
             business = BusinessModel.find_by_business_name(business_name)
-            
+
             if business:
                 business.delete_from_db()
+                return {'message': "Business deleted."}
 
-            return {'message': 'business deleted'}
+            return {'message': 'Business not found.'}, 404
+
+
 
 
 class GetAllBusinesses(Resource):
