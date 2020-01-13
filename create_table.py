@@ -15,8 +15,8 @@ cursor.execute(create_table)
 create_table = "CREATE TABLE IF NOT EXISTS events (id INTEGER PRIMARY KEY, name text, location text, description text, event_type text, date Date, time Time, min_age text, cost text, business_id INTEGER)"
 cursor.execute(create_table)
 
-# create_table = "CREATE TABLE IF NOT EXISTS event_history (id INTEGER PRIMARY KEY, age INTEGER, sex)"
-# cursor.execute(create_table)
+create_table = "CREATE TABLE IF NOT EXISTS event_history (id INTEGER PRIMARY KEY, age TEXT, sex TEXT, event_type TEXT, location TEXT, time TEXT)"
+cursor.execute(create_table)
 
 connection.commit()
 
