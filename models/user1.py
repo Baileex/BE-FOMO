@@ -9,7 +9,7 @@ class UserModel(db.Model):
     username = db.Column(db.String(80))
     password = db.Column(db.String(600))
     email = db.Column(db.String(80))
-    age = db.Column(db.Integer)
+    age = db.Column(db.String(80))
     location = db.Column(db.String(80))
     option_1 = db.Column(db.String(80))
     option_2 = db.Column(db.String(80))
