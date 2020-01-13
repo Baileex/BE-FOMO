@@ -108,14 +108,14 @@ class EventPoster(Resource):
 
       return {'message': 'business does not exist'}, 404  
         
-        if EventsModel.find_by_name(data['name']):
+      if EventsModel.find_by_name(data['name']):
             return {'message': "An event with name '{}' already exists.".format(data['name'])}, 400
             
-        event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'])
+      event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'])
 
-        try:
-            event.save_to_db()
-        except:
-            return {"message": "An error occurred inserting the event."}, 500
+      try:
+        event.save_to_db()
+      except:
+        return {"message": "An error occurred inserting the event."}, 500
 
-        return event.json(), 201
+      return event.json(), 201
