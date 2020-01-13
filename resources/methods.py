@@ -18,9 +18,9 @@ class Methods(Resource):
                     "option_1": "Food",
                     "option_2": "Music",
                     "option_3": "Drinking",
-                    "option_4": "Dance"
+                    "option_4": "Dance",
                     "family":
-                    "DEFAULT false"
+                    "DEFAULT false",
                     "gender":
                     "male"
                 }
@@ -31,41 +31,40 @@ class Methods(Resource):
             },
 
         "PATCH /users/:username/location": {
-        "description": "Patch User by username": {
-            "username": "Manchester",
+        "description": "Patch User by username", 
+            "username": "Manchester"
+        },
 
-        }
-    },
-
-        "DELETE /users/:username": {
+    "DELETE /users/:username": {
         "description": "Delete User by username"
     },
 
-
-        "POST /login": {
+    "POST /login": {
         "description": "check username and password and receive an access key"
     },
 
-       "POST /logout": {
+    "POST /logout": {
         "description": "check username and password and receive and blacklist access key REQUIRED" 
        },
 
-       "PATCH /users/:username/username": {
-        "description": "Patch User Quiz results by username": {
+    "PATCH /users/:username/username": {
+        "description": "Patch User Quiz results by username", 
+        "example": {
             "option_1": "test",
             "option_2": "test",
             "option_3": "test",
             "option_4": "test"
         }
-    },
+    }, 
     
-      "DELETE /users/:username": {
+    "DELETE /users/:username": {
         "description": "Delete user"
       },
 
-      "PATCH /users/:username/password": {
+    "PATCH /users/:username/password": {
           "description": "Change user password"
       }
+ }
 
 
-    }
+
