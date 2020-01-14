@@ -50,7 +50,9 @@ class Event(Resource):
                         type=str,
                         required=True,
                         help="Every event needs a cost (can be zero)."
-                        ) 
+                        )
+    parser.add_argument('url', type=str,
+                        default="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/3/2016/12/16131147/future-phone-mobile-live-events-technology-trends.png")
     # @jwt_required()
     def get(self, name):
         event = EventsModel.find_by_name(name)
@@ -81,6 +83,7 @@ class Event(Resource):
             event.time = data['time']
             event.min_age = data['min_age']
             event.cost = data['cost']
+            event.url = data['url']
 
         event.save_to_db()
 
@@ -111,7 +114,7 @@ class EventPoster(Resource):
       if EventsModel.find_by_name(data['name']):
          return {'message': "An event with name '{}' already exists.".format(data['name'])}, 400
             
-      event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'])
+      event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'], data['url'])
 
       try:
         event.save_to_db()
