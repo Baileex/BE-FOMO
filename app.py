@@ -53,7 +53,7 @@ api.add_resource(ChangeLocation, '/users/<string:username>/location')
 api.add_resource(EventHist, '/event_history')
 api.add_resource(EventHistDelete, '/event_history/<int:id>')
 api.add_resource(EventHistByType, '/event_history/<string:event_type>')
-api.add_resource(EventHistByLocation, '/event_history/<string:location>')
+api.add_resource(EventHistByLocation, '/event_history/filter/<string:location>')
 
 if __name__ == '__main__':
     from db import db

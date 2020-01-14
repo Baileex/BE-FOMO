@@ -85,14 +85,14 @@ class BusinessLogout(Resource):
 
 class Business(Resource):
 
-        def get(self, business_name):
-            business = BusinessModel.find_by_business_name(business_name)
+        def get(self, username):
+            business = BusinessModel.find_by_username(username)
             
             if business:
                 return business.json()
             return {'message': 'business not found'}, 404
 
-        def delete(self, business_name):
+        def delete(self, username):
             business = BusinessModel.find_by_business_name(business_name)
 
             if business:
