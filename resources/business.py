@@ -69,6 +69,7 @@ class BusinessLogin(Resource):
             access_token = create_access_token(identity=business.id, fresh=True)
             refresh_token = create_refresh_token(business.id)
             return {
+                business.json(),
                 'message': 'Business User logged in',
                 'access_token': access_token,
                 'refresh_token': refresh_token
