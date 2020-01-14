@@ -14,7 +14,7 @@ class EventsModel(db.Model):
     min_age = db.Column(db.String(80))
     cost = db.Column(db.String(80))
     business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'))
-    url = db.Column(db.String(80))
+    url = db.Column(db.String(400))
     
     business = db.relationship('BusinessModel')
 
@@ -31,7 +31,7 @@ class EventsModel(db.Model):
         self.url = url
 
     def json(self):
-        return {'name': self.name, 'location': self.location, 'business_id': self.business_id, 'description': self.description, 'event_type': self.event_type, 'date': self.date, 'time': self.time, 'min_age': self.min_age, 'cost': self.cost, self.url: "url" }
+        return {'name': self.name, 'location': self.location, 'business_id': self.business_id, 'description': self.description, 'event_type': self.event_type, 'date': self.date, 'time': self.time, 'min_age': self.min_age, 'cost': self.cost, self.url: 'url' }
 
     @classmethod
     def find_by_name(cls, name):
