@@ -14,7 +14,7 @@ class EventsModel(db.Model):
     min_age = db.Column(db.String(80))
     cost = db.Column(db.String(80))
     business_id = db.Column(db.Integer, db.ForeignKey('businesses.id'))
-    url = db.Column(db.String(400))
+    url = db.Column(db.String(800))
     
     business = db.relationship('BusinessModel')
 

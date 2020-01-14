@@ -23,7 +23,7 @@ class BusinessRegister(Resource):
                         help="This field cannot be blank")
     parser.add_argument('address', type=str, required=True,
                         help="This field cannot be blank")
-     parser.add_argument('description', type=str,
+    parser.add_argument('description', type=str,
                         help="This field cannot be blank")
     parser.add_argument('url', type=str,
                         help="This field cannot be blank")
