@@ -93,7 +93,7 @@ class Business(Resource):
             return {'message': 'business not found'}, 404
 
         def delete(self, username):
-            business = BusinessModel.find_by_business_name(business_name)
+            business = BusinessModel.find_by_username(username)
 
             if business:
                 business.delete_from_db()
