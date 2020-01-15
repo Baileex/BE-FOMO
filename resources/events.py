@@ -88,8 +88,8 @@ class Event(Resource):
 
     
 
-    def delete(self, name):
-        event = EventsModel.find_by_name(name)
+    def delete(self, event_name):
+        event = EventsModel.find_by_name(event_name)
         if event:
             event.delete_from_db()
             return {'message': 'Event deleted.'}
