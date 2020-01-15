@@ -6,16 +6,47 @@ from models.business import BusinessModel
 
 class Event(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('name',
+    parser.add_argument('event_name',
                         type=str,
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    parser.add_argument('location',
+    parser.add_argument('name',
                         type=str,
                         required=True,
-                        help="Every event needs a location."
+                        help="Every event needs a name."
                         )
+    parser.add_argument('address',
+                        type=str,
+                        required=True,
+                        help="Every event needs an address."
+                        )
+    parser.add_argument('cityname',
+                        type=str,
+                        required=True,
+                        help="Every event needs a cityname."
+                        )
+    parser.add_argument('postcode',
+                        type=str,
+                        required=True,
+                        help="Every event needs an address."
+                        )
+    parser.add_argument('latitude',
+                        type=str,
+                        help="Every event needs an address."
+                        )
+    parser.add_argument('longitude',
+                        type=str,
+                        help="Every event needs an address."
+                        )
+    parser.add_argument('doorsopen',
+                        type=str,
+                        help="Every event needs an address."
+                        )
+    parser.add_argument('doorsclose',
+                        type=str,
+                        help="Every event needs an address."
+                        )                    
     # parser.add_argument('business_id',
     #                     type=str,
     #                     required=True,
@@ -35,18 +66,13 @@ class Event(Resource):
                         type=str,
                         required=True,
                         help="Every event needs a date."
-                        )
-    parser.add_argument('time',
-                        type=str,
-                        required=True,
-                        help="Every event needs a time."
                         ) 
-    parser.add_argument('min_age',
+    parser.add_argument('minage',
                         type=str,
                         required=True,
                         help="Every event needs a min_age."
                         )                     
-    parser.add_argument('cost',
+    parser.add_argument('entryprice',
                         type=str,
                         required=True,
                         help="Every event needs a cost (can be zero)."
@@ -75,14 +101,18 @@ class Event(Resource):
         event = EventsModel.find_by_name(name)
 
         if event:
+            event.event_name = data['event_name']
             event.name = data['name']
-            event.location = data['location']
+            event.address = data['address']
+            event.cityname = data['cityname']
+            event.postcode = data['address']
             event.description = data['description']
             event.event_type = data['event_type']
             event.date = data['date']
-            event.time = data['time']
-            event.min_age = data['min_age']
-            event.cost = data['cost']
+            event.doorsopen = data['doorsopen']
+            event.doorsclose = data['doorsclose']
+            event.minage = data['minage']
+            event.entryprice = data['entryprice']
             event.url = data['url']
 
         event.save_to_db()
@@ -111,10 +141,10 @@ class EventPoster(Resource):
       else:
         return {'message': 'business does not exist'}, 404  
         
-      if EventsModel.find_by_name(data['name']):
-         return {'message': "An event with name '{}' already exists.".format(data['name'])}, 400
+      if EventsModel.find_by_name(data['event_name']):
+         return {'message': "An event with name '{}' already exists.".format(data['event_name'])}, 400
             
-      event = EventsModel(data['name'], data['location'], business_id, data['description'], data['event_type'], data['date'], data['time'], data['min_age'], data['cost'], data['url'])
+      event = EventsModel(data['event_name'], data['name'], business_id, data['description'], data['address'], data['cityname'], data['postcode'], data['event_type'], data['date'], data['doorsopen'], data['doorsclose'], data['minage'], data['entryprice'], data['url'], data['longitude'], data['latitude'])
 
       try:
         event.save_to_db()
