@@ -154,13 +154,22 @@ class EventPoster(Resource):
       return event.json(), 201
 
 class PatchLocation(Resource):
+  parser = reqparse.RequestParser()
+  parser.add_argument('latitude',
+                        type=str,
+                        help="Every event needs an address."
+                        )
+  parser.add_argument('longitude',
+                        type=str,
+                        help="Every event needs an address."
+                        )
   def patch(self, event_name):
 
     event = EventsModel.find_by_name(event_name)
-
+    data = PatchLocation.parser.parse_args()
     if event:
-            event.event_name = data['longitude']
-            event.name = data['latitude']
+            event.longitude = data['longitude']
+            event.latitude = data['latitude']
 
     event.save_to_db()
 
