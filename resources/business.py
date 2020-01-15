@@ -122,7 +122,7 @@ class ChangeBusPassword(Resource):
         business = BusinessModel.find_by_business_name(business_name)
 
         if business:
-            business.password = data['password']
+            business.password = sha256_crypt.hash(data['password'])
 
         business.save_to_db()
 
