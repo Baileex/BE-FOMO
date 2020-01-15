@@ -6,7 +6,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin, UserLogout
 from resources.business import BusinessRegister, ChangeBusDetails, ChangeBusUsername, Business, GetAllBusinesses, ChangeBusPassword, BusinessLogin, BusinessLogout
-from resources.events import EventList, Event, EventPoster, EventByID
+from resources.events import EventList, Event, EventPoster, EventByID, PatchLocation
 from resources.event_history import EventHistByType, EventHist, EventHistDelete, EventHistByLocation
 from resources.methods import Methods
 from blacklist import BLACKLIST
@@ -40,6 +40,7 @@ api.add_resource(EventPoster, '/businesses/event/<int:business_id>')
 api.add_resource(EventList, '/events')
 api.add_resource(Event, '/events/<string:name>')
 api.add_resource(EventByID, '/events/<int:business_id>')
+api.add_resource(PatchLocation, '/events/<int:business_id>/location')
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogout, '/logout')
@@ -54,6 +55,7 @@ api.add_resource(EventHist, '/event_history')
 api.add_resource(EventHistDelete, '/event_history/<int:id>')
 api.add_resource(EventHistByType, '/event_history/<string:event_type>')
 api.add_resource(EventHistByLocation, '/event_history/filter/<string:location>')
+
 
 if __name__ == '__main__':
     from db import db

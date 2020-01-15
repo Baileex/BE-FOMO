@@ -152,3 +152,16 @@ class EventPoster(Resource):
         return {"message": "An error occurred inserting the event."}, 500
 
       return event.json(), 201
+
+class PatchLocation(Resource):
+  def patch(self, business_id):
+
+    event = EventsModel.find_by_name(event_name)
+
+    if event:
+            event.event_name = data['longitude']
+            event.name = data['latitude']
+
+    event.save_to_db()
+
+    return event.json()
