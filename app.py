@@ -6,7 +6,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.user1 import UserRegister, GetUser, GetAllUsers, ChangePassword, ChangeUsername, ChangeLocation, UserLogin, UserLogout
 from resources.business import BusinessRegister, ChangeBusDetails, ChangeBusUsername, Business, GetAllBusinesses, ChangeBusPassword, BusinessLogin, BusinessLogout
-from resources.events import EventList, Event, EventPoster, EventByID, PatchLocation
+from resources.events import EventList, Event, EventPoster, EventByID, PatchLocation, DeleteById
 from resources.event_history import EventHistByType, EventHist, EventHistDelete, EventHistByLocation
 from resources.methods import Methods
 from blacklist import BLACKLIST
@@ -39,6 +39,7 @@ api.add_resource(Business, '/businesses/<string:username>')
 api.add_resource(EventPoster, '/businesses/event/<int:business_id>')
 api.add_resource(EventList, '/events')
 api.add_resource(Event, '/events/<string:event_name>')
+api.add_resource(DeleteById, '/events/<int:id>')
 api.add_resource(EventByID, '/events/<int:business_id>')
 api.add_resource(PatchLocation, '/events/<string:event_name>/location')
 api.add_resource(UserRegister, '/register')

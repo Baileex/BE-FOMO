@@ -80,8 +80,8 @@ class Event(Resource):
     parser.add_argument('url', type=str,
                         default="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/3/2016/12/16131147/future-phone-mobile-live-events-technology-trends.png")
     # @jwt_required()
-    def get(self, name):
-        event = EventsModel.find_by_name(name)
+    def get(self, event_name):
+        event = EventsModel.find_by_name(event_name)
         if event:
             return event.json()
         return {'message': '`Event` not found'}, 404
@@ -95,7 +95,7 @@ class Event(Resource):
             return {'message': 'Event deleted.'}
         return {'message': 'Event not found.'}, 404
 
-    def patch(self, name):
+    def patch(self, event_name):
         data = Event.parser.parse_args()
 
         event = EventsModel.find_by_name(name)
@@ -174,3 +174,11 @@ class PatchLocation(Resource):
     event.save_to_db()
 
     return event.json()
+
+class DeleteById(Resource):
+  def delete(self, id):
+        event = EventsModel.find_by_event_id(id)
+        if event:
+            event.delete_from_db()
+            return {'message': 'Event deleted.'}
+        return {'message': 'Event not found.'}, 404

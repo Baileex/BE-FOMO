@@ -54,6 +54,10 @@ class EventsModel(db.Model):
     @classmethod
     def find_by_id(cls, business_id):
         return cls.query.filter_by(business_id=business_id).all()  
+    
+    @classmethod
+    def find_by_event_id(cls, id):
+        return cls.query.filter_by(id=id).first()
 
     def save_to_db(self):
         db.session.add(self)
