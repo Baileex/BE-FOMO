@@ -154,7 +154,7 @@ class EventPoster(Resource):
       return event.json(), 201
 
 class PatchLocation(Resource):
-  def patch(self, business_id):
+  def patch(self, event_name):
 
     event = EventsModel.find_by_name(event_name)
 
