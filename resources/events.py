@@ -131,6 +131,15 @@ class EventByID(Resource):
 
         return {'events': list(map(lambda x: x.json(), events))}
 
+class EventByEventID(Resource):
+    def get(self, id):
+
+       event = EventsModel.find_by_event_id(id)
+
+       if event:
+         return event.json()
+       return {'message': 'Event not found.'}, 404
+
 class EventPoster(Resource):
     def post(self, business_id):
     
