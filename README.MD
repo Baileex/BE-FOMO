@@ -1,4 +1,4 @@
-# BE NC NEWS
+# BE FOMO
 
 The FOMO Back End repository is a RESTful API built using Python and the framework Flask.
 
